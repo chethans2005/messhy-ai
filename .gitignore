@@ -1,0 +1,48 @@
+# ── Virtual environment ───────────────────────────────────────────────
+mesh-env/
+venv/
+.venv/
+env/
+
+# ── Python cache ──────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Generated outputs (large binary files) ────────────────────────────
+backend/outputs/raw/
+backend/outputs/cleaned/
+backend/outputs/logs/
+
+# ── Shap-E downloaded model weights (~1 GB) ───────────────────────────
+backend/shap_e_model_cache/*.pt
+backend/shap_e_model_cache/*.pth
+
+# Keep the config YAML files (small, useful for reference)
+!backend/shap_e_model_cache/*.yaml
+
+# ── IDE / editor ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+
+# ── OS noise ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Jupyter ───────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Build / dist ──────────────────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+
+# ── Environment variables / secrets ───────────────────────────────────
+.env
+.env.*
+secrets.json
