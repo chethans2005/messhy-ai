@@ -43,6 +43,12 @@ def index():
     return send_from_directory(str(FRONTEND_DIR), "index.html")
 
 
+@app.route("/<path:filename>")
+def serve_static(filename):
+    """Serve static files (CSS, JS, etc.) from frontend directory"""
+    return send_from_directory(str(FRONTEND_DIR), filename)
+
+
 # ---------------------------------------------------------------------------
 # API
 # ---------------------------------------------------------------------------

@@ -4,229 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Text → 3D Mesh</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f0f0f;
-      color: #e8e8e8;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 40px;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    h1 { font-size: 1.35rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
-
-    .subtitle { font-size: 0.85rem; color: #666; margin-bottom: 28px; }
-
-    textarea {
-      width: 100%;
-      background: #111;
-      border: 1px solid #2e2e2e;
-      border-radius: 8px;
-      color: #e8e8e8;
-      font-size: 0.95rem;
-      font-family: inherit;
-      padding: 12px 14px;
-      resize: vertical;
-      min-height: 80px;
-      line-height: 1.5;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    textarea:focus { border-color: #444; }
-    textarea::placeholder { color: #444; }
-
-    #generateBtn {
-      margin-top: 12px;
-      width: 100%;
-      background: #fff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 12px;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    #generateBtn:hover:not(:disabled) { opacity: 0.88; }
-    #generateBtn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-    /* ---- loader ---- */
-    #loader {
-      margin-top: 28px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .spinner {
-      width: 34px;
-      height: 34px;
-      border: 3px solid #2e2e2e;
-      border-top-color: #ccc;
-      border-radius: 50%;
-      animation: spin 0.75s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #statusMsg { font-size: 0.875rem; color: #999; text-align: center; }
-    #elapsed   { font-size: 0.78rem;  color: #555; }
-
-    /* ---- result ---- */
-    #result { margin-top: 28px; display: none; }
-
-    #downloadLink {
-      display: block;
-      width: 100%;
-      background: #0e2010;
-      border: 1px solid #1f5230;
-      color: #4ecb6e;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 12px;
-      text-align: center;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-    #downloadLink:hover { background: #122918; }
-
-    /* ---- error ---- */
-    #errorBox {
-      margin-top: 28px;
-      display: none;
-      background: #1a0c0c;
-      border: 1px solid #4a1a1a;
-      border-radius: 8px;
-      padding: 13px 15px;
-      font-size: 0.85rem;
-      color: #d96060;
-      line-height: 1.5;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <div class="card">
-    <h1>Text → 3D Mesh</h1>
-    <p class="subtitle">Describe any object. Get a downloadable .glb file.</p>
+  <div class="container">
+    <!-- Sidebar: Input Panel -->
+    <aside class="sidebar">
+      <div class="sidebar-content">
+        <h1>Text → 3D Mesh</h1>
+        <p class="subtitle">Describe any object. Get a preview and download.</p>
 
-    <textarea id="prompt" placeholder="e.g. a wooden chair with four legs and a backrest" rows="3"></textarea>
-    <button id="generateBtn" onclick="generate()">Generate Mesh</button>
+        <!-- Input Section -->
+        <div class="input-section">
+          <label for="prompt">Describe your object</label>
+          <textarea 
+            id="prompt" 
+            placeholder="e.g., a wooden chair with four legs and a backrest"
+            rows="4"
+          ></textarea>
+          <button id="generateBtn" class="btn btn-primary">Generate Mesh</button>
+        </div>
 
-    <div id="loader">
-      <div class="spinner"></div>
-      <p id="statusMsg">Starting...</p>
-      <p id="elapsed"></p>
-    </div>
+        <!-- Status Section -->
+        <div id="statusSection" class="status-section hidden">
+          <div class="loader">
+            <div class="spinner"></div>
+            <p id="statusMsg" class="status-msg">Initializing...</p>
+            <p id="elapsed" class="elapsed-time"></p>
+          </div>
+        </div>
 
-    <div id="result">
-      <a id="downloadLink" href="#">⬇ &nbsp;Download .glb</a>
-    </div>
+        <!-- Result Section -->
+        <div id="resultSection" class="result-section hidden">
+          <div class="success-message">✓ Mesh generated successfully</div>
+          <button id="downloadBtn" class="btn btn-secondary">⬇ Download .glb</button>
+        </div>
 
-    <div id="errorBox"></div>
+        <!-- Error Section -->
+        <div id="errorSection" class="error-section hidden">
+          <div class="error-icon">⚠</div>
+          <p id="errorMsg" class="error-text"></p>
+          <button id="retryBtn" class="btn btn-secondary">Try Again</button>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+          <h3>Info</h3>
+          <ul>
+            <li>Powered by Shap-E model</li>
+            <li>Generates high-quality 3D meshes</li>
+            <li>Real-time preview in browser</li>
+            <li>Download as GLB format</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main: Viewer Panel -->
+    <main class="main-content">
+      <div id="viewerContainer" class="viewer-container">
+        <canvas id="meshCanvas"></canvas>
+        <div id="viewerPlaceholder" class="viewer-placeholder">
+          <div class="placeholder-content">
+            <p>👁️ 3D Mesh Preview</p>
+            <p class="placeholder-text">Generate a mesh to preview it here</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Viewer Controls -->
+      <div class="viewer-controls hidden" id="viewerControls">
+        <button id="resetViewBtn" class="control-btn" title="Reset camera">↪ Reset View</button>
+        <button id="autoRotateBtn" class="control-btn" title="Toggle auto-rotate">⟳ Auto Rotate</button>
+      </div>
+    </main>
   </div>
 
-  <script>
-    let pollTimer   = null;
-    let elapsedTimer = null;
-    let startTime   = null;
-
-    async function generate() {
-      const prompt = document.getElementById('prompt').value.trim();
-      if (!prompt) return;
-
-      reset();
-      show('loader');
-      document.getElementById('generateBtn').disabled = true;
-      document.getElementById('statusMsg').textContent = 'Starting...';
-      document.getElementById('elapsed').textContent = '';
-
-      let jobId;
-      try {
-        const res  = await fetch('/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt }),
-        });
-        const data = await res.json();
-        if (!res.ok) { showError(data.error || 'Failed to start.'); return; }
-        jobId = data.job_id;
-      } catch {
-        showError('Could not reach the server.'); return;
-      }
-
-      startTime = Date.now();
-
-      // Elapsed counter
-      elapsedTimer = setInterval(() => {
-        const s = Math.floor((Date.now() - startTime) / 1000);
-        const m = Math.floor(s / 60);
-        document.getElementById('elapsed').textContent =
-          m > 0 ? `${m}m ${s % 60}s elapsed` : `${s}s elapsed`;
-      }, 1000);
-
-      // Status poller
-      pollTimer = setInterval(async () => {
-        try {
-          const res = await fetch(`/status/${jobId}`);
-          const job = await res.json();
-          document.getElementById('statusMsg').textContent = job.message;
-
-          if (job.status === 'done') {
-            clearTimers();
-            document.getElementById('downloadLink').href = `/download/${jobId}`;
-            hide('loader');
-            show('result');
-            document.getElementById('generateBtn').disabled = false;
-          } else if (job.status === 'error') {
-            clearTimers();
-            showError(job.message);
-          }
-        } catch { /* network blip — keep polling */ }
-      }, 2500);
-    }
-
-    function showError(msg) {
-      clearTimers();
-      hide('loader');
-      hide('result');
-      document.getElementById('errorBox').textContent = msg;
-      show('errorBox');
-      document.getElementById('generateBtn').disabled = false;
-    }
-
-    function reset() {
-      clearTimers();
-      hide('loader'); hide('result'); hide('errorBox');
-    }
-
-    function show(id) { document.getElementById(id).style.display = id === 'loader' ? 'flex' : 'block'; }
-    function hide(id) { document.getElementById(id).style.display = 'none'; }
-
-    function clearTimers() {
-      clearInterval(pollTimer);
-      clearInterval(elapsedTimer);
-    }
-
-    // Allow Ctrl+Enter to submit
-    document.getElementById('prompt').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) generate();
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/mesh-viewer.js"></script>
+  <script src="js/ui-manager.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

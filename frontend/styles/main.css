@@ -1,0 +1,600 @@
+/* ============================================================================
+   Global Styles
+   ============================================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #e8e8e8;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ============================================================================
+   Layout: Container & Main Structure
+   ============================================================================ */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 420px;
+  background: #0f0f0f;
+  border-right: 1px solid #2a2a2a;
+  overflow-y: auto;
+  padding: 32px 0;
+
+  /* Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: #404040 transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #505050;
+}
+
+.sidebar-content {
+  padding: 0 24px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1a;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   Typography
+   ============================================================================ */
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e8e8e8;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #999;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d0d0d0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================================
+   Input Styles
+   ============================================================================ */
+
+textarea {
+  width: 100%;
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #e8e8e8;
+  font-size: 0.95rem;
+  font-family: inherit;
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.5;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+textarea:focus {
+  border-color: #4a7c59;
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+  background: #222;
+}
+
+textarea::placeholder {
+  color: #555;
+}
+
+/* ============================================================================
+   Button Styles
+   ============================================================================ */
+
+.btn {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, #4a7c59 0%, #3a6b4a 100%);
+  color: #fff;
+  margin-top: 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5a8c69 0%, #4a7b5a 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  background: #2a2a2a;
+  color: #e8e8e8;
+  border: 1px solid #3a3a3a;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #333;
+  border-color: #4a4a4a;
+  transform: translateY(-1px);
+}
+
+.control-btn {
+  background: #2a2a2a;
+  color: #e8e8e8;
+  border: 1px solid #3a3a3a;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+}
+
+.control-btn:hover {
+  background: #333;
+  border-color: #4a4a4a;
+}
+
+/* ============================================================================
+   Section Styles (Input, Status, Result, Error)
+   ============================================================================ */
+
+.input-section,
+.status-section,
+.result-section,
+.error-section,
+.info-section {
+  margin-bottom: 24px;
+}
+
+.input-section {
+  margin-bottom: 0;
+}
+
+.status-section {
+  padding: 20px;
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+}
+
+.result-section {
+  padding: 16px;
+  background: linear-gradient(135deg, #0e2010 0%, #1a2a25 100%);
+  border: 1px solid #1f5230;
+  border-radius: 8px;
+}
+
+.success-message {
+  color: #4ecb6e;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.error-section {
+  padding: 16px;
+  background: #2a1515;
+  border: 1px solid #5a3a3a;
+  border-radius: 8px;
+}
+
+.error-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.error-text {
+  color: #ff8888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* ============================================================================
+   Loader / Spinner
+   ============================================================================ */
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #2e2e2e;
+  border-top-color: #4a7c59;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status-msg {
+  font-size: 0.9rem;
+  color: #d0d0d0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.elapsed-time {
+  font-size: 0.8rem;
+  color: #777;
+  text-align: center;
+}
+
+/* ============================================================================
+   Info Section
+   ============================================================================ */
+
+.info-section {
+  padding: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.info-section h3 {
+  margin-bottom: 10px;
+}
+
+.info-section ul {
+  list-style: none;
+}
+
+.info-section li {
+  padding: 4px 0;
+  color: #999;
+  line-height: 1.6;
+}
+
+.info-section li::before {
+  content: "→ ";
+  color: #4a7c59;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* ============================================================================
+   Viewer Container
+   ============================================================================ */
+
+.viewer-container {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+  border-left: 1px solid #2a2a2a;
+}
+
+#meshCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.viewer-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.5) 0%, rgba(37, 37, 37, 0.5) 100%);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.viewer-placeholder.hidden {
+  display: none;
+}
+
+.placeholder-content {
+  text-align: center;
+  color: #666;
+}
+
+.placeholder-content p:first-child {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.placeholder-text {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+/* ============================================================================
+   Viewer Controls
+   ============================================================================ */
+
+.viewer-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(30, 30, 30, 0.9);
+  padding: 8px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  border: 1px solid #3a3a3a;
+  transition: all 0.3s ease;
+}
+
+.viewer-controls.hidden {
+  display: none;
+}
+
+.control-btn {
+  padding: 8px 12px;
+  background: #2a2a2a;
+  color: #e8e8e8;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.control-btn:hover {
+  background: #333;
+  border-color: #4a4a4a;
+  transform: translateY(-1px);
+}
+
+.control-btn.active {
+  background: #4a7c59;
+  border-color: #6a9c79;
+  color: #fff;
+}
+
+/* ============================================================================
+   Visibility Helpers
+   ============================================================================ */
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-width: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #2a2a2a;
+    max-height: 50vh;
+    padding: 24px 0;
+  }
+
+  .main-content {
+    min-height: 50vh;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-content {
+    padding: 0 16px;
+  }
+
+  textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .viewer-controls {
+    bottom: 12px;
+    right: 12px;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-height: 45vh;
+    padding: 20px 0;
+  }
+
+  .main-content {
+    min-height: 55vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-content {
+    padding: 0 12px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .viewer-controls {
+    bottom: 8px;
+    right: 8px;
+    gap: 4px;
+  }
+
+  .control-btn {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+
+  .placeholder-content p:first-child {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================================================
+   Dark Mode (Already in dark mode by default)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Already styled for dark mode */
+}
+
+/* ============================================================================
+   Animations
+   ============================================================================ */
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-section,
+.error-section {
+  animation: slideIn 0.3s ease;
+}
+
+/* ============================================================================
+   Accessibility
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #4a7c59;
+  outline-offset: 2px;
+}
